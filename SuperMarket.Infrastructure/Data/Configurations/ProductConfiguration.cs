@@ -4,9 +4,9 @@ using SuperMarkerAPI.Models;
 
 namespace SuperMarkerAPI.Data.Configurations
 {
-    public class ProductConfiguration : IEntityTypeConfiguration<Product>
+    public class ProductConfiguration : IEntityTypeConfiguration<ProductEntity>
     {
-        public void Configure(EntityTypeBuilder<Product> builder)
+        public void Configure(EntityTypeBuilder<ProductEntity> builder)
         {
             builder.HasKey(p => p.IDProduct);
             builder.Property(p => p.NameProduct)

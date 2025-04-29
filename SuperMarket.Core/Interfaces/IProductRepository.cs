@@ -9,6 +9,10 @@ namespace SuperMarket.Core.Interfaces
 {
     public interface IProductRepository
     {
-        Task<IEnumerable<Product>> GetProducts();
+        Task<IEnumerable<ProductEntity>> GetProductByNameAndTypeAsync(string Name = "", string Type = "");
+        Task<IEnumerable<ProductEntity>> GetProductByPriceAsync(Decimal? maxPrice = null, Decimal? minPrice = null);
+        Task<ProductEntity> AddProductAsync(ProductEntity product);
+        Task<ProductEntity> UpdateProductAsync(Guid ProductID, ProductEntity product);
+        Task<bool> DeleteProductAsync(Guid ProductID);
     }
 }

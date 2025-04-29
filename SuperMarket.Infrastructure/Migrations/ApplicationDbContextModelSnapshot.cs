@@ -57,7 +57,7 @@ namespace SuperMarkerAPI.Migrations
 
                     b.HasIndex("ProductTypeID");
 
-                    b.ToTable("Products");
+                    b.ToTable("Products", (string)null);
                 });
 
             modelBuilder.Entity("SuperMarkerAPI.Models.ProductType", b =>
@@ -73,7 +73,7 @@ namespace SuperMarkerAPI.Migrations
 
                     b.HasKey("IDType");
 
-                    b.ToTable("ProductTypes");
+                    b.ToTable("ProductTypes", (string)null);
                 });
 
             modelBuilder.Entity("SuperMarkerAPI.Models.Product", b =>

@@ -1,6 +1,6 @@
 ﻿namespace SuperMarkerAPI.Models
 {
-    public class Product
+    public class ProductEntity
     {
         public Guid IDProduct { get; set; } 
         public string NameProduct { get; set; } = string.Empty;
@@ -11,6 +11,6 @@
         public DateTime ManufactureDate { get; set; }
         public bool IsExpired { get; set; }
         //Navigation with ProductType
-        public ProductType? productType { get; set; }
+        public ProductTypeEntity? productType { get; set; }
     }
 }
