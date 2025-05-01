@@ -2,11 +2,10 @@
 {
     public class GetProductsDTO
     {
-        public Guid IDProducts { get; set; }
-        public string NameProduct { get; set; } = string.Empty;
-        public string ProductType { get; set; } = string.Empty;
+        public string? NameProduct { get; set; } 
+        public string? ProductType { get; set; } 
         public decimal ProductPrice { get; set; }
-        public string ProductUnit { get; set; } = string.Empty;
+        public string? ProductUnit { get; set; } 
         public DateTime ExpirationDate { get; set; }
         public DateTime ManufactureDate { get; set; }
         public bool IsExpired { get; set; }

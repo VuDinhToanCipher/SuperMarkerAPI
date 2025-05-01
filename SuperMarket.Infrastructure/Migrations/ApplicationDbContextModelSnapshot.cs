@@ -22,7 +22,7 @@ namespace SuperMarkerAPI.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("SuperMarkerAPI.Models.Product", b =>
+            modelBuilder.Entity("SuperMarkerAPI.Models.ProductEntity", b =>
                 {
                     b.Property<Guid>("IDProduct")
                         .ValueGeneratedOnAdd()
@@ -57,10 +57,10 @@ namespace SuperMarkerAPI.Migrations
 
                     b.HasIndex("ProductTypeID");
 
-                    b.ToTable("Products", (string)null);
+                    b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("SuperMarkerAPI.Models.ProductType", b =>
+            modelBuilder.Entity("SuperMarkerAPI.Models.ProductTypeEntity", b =>
                 {
                     b.Property<Guid>("IDType")
                         .ValueGeneratedOnAdd()
@@ -73,12 +73,12 @@ namespace SuperMarkerAPI.Migrations
 
                     b.HasKey("IDType");
 
-                    b.ToTable("ProductTypes", (string)null);
+                    b.ToTable("ProductTypes");
                 });
 
-            modelBuilder.Entity("SuperMarkerAPI.Models.Product", b =>
+            modelBuilder.Entity("SuperMarkerAPI.Models.ProductEntity", b =>
                 {
-                    b.HasOne("SuperMarkerAPI.Models.ProductType", "productType")
+                    b.HasOne("SuperMarkerAPI.Models.ProductTypeEntity", "productType")
                         .WithMany("Products")
                         .HasForeignKey("ProductTypeID")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -87,7 +87,7 @@ namespace SuperMarkerAPI.Migrations
                     b.Navigation("productType");
                 });
 
-            modelBuilder.Entity("SuperMarkerAPI.Models.ProductType", b =>
+            modelBuilder.Entity("SuperMarkerAPI.Models.ProductTypeEntity", b =>
                 {
                     b.Navigation("Products");
                 });

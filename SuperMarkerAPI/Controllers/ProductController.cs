@@ -1,9 +1,6 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using SuperMarkerAPI.Models;
 using SuperMarkerAPI.Models.DTOs.ProductsDTO;
-using SuperMarket.Application.Commands;
 using SuperMarket.Application.Commands.Product;
 
 namespace SuperMarkerAPI.Controllers
@@ -12,15 +9,34 @@ namespace SuperMarkerAPI.Controllers
     [ApiController]
     public class ProductController(ISender sender) : ControllerBase
     {
-        [HttpGet]
-        public IEnumerable<ProductEntity> GetProducts()
+        [HttpGet("Search")]
+        public async Task<IActionResult> GetProductByNameAndTypeAsync([FromQuery] string productName = "" , [FromQuery] string productType = "") 
         {
-            return new List<ProductEntity>();
+            var result = await sender.Send(new GetProductByNameAndTypeCommand(productName, productType));
+            return Ok(result);
         }
-        [HttpPost("")]
+        [HttpGet("SearchPrice")]
+        public async Task<IActionResult> GetProductByPriceAsync([FromQuery] decimal? maxPrice , [FromQuery] decimal? minPrice)
+        {
+            var result = await sender.Send(new GetProductByPriceCommand(maxPrice, minPrice));
+            return Ok(result);
+        }
+        [HttpPost("Add")]
         public async Task<IActionResult> AddProductAsync([FromBody] PostProductsDTO productsDTO)
         {
             var result = await sender.Send(new AddProductCommand(productsDTO));
+            return Ok(result);
+        }
+        [HttpPut("{IDProduct}")]
+        public async Task<IActionResult> UpdateProductAsync(Guid IDProduct,[FromBody] PutProductsDTO putProductsDTO)
+        {
+            var result = await sender.Send(new UpdateProductCommand(IDProduct, putProductsDTO));
+            return Ok(result);
+        }
+        [HttpDelete("{IDProduct}")]
+        public async Task<IActionResult> DeleteProductAsync(Guid IDProduct)
+        {
+            var result = await sender.Send(new  DeleteProductCommand(IDProduct));
             return Ok(result);
         }
     }

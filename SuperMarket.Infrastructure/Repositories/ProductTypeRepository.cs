@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using SuperMarkerAPI.Data;
 using SuperMarkerAPI.Models;
 using SuperMarket.Core.Interfaces;
@@ -30,7 +25,6 @@ namespace SuperMarket.Infrastructure.Repositories
             }
             return false;
         }
-
         public async Task<ProductTypeEntity> UpdateProductTypeAsync(Guid ProductTypeID, ProductTypeEntity productTypeEntity)
         {
             var Type = await dbContext.ProductTypes.FirstOrDefaultAsync(x => x.IDType == ProductTypeID);

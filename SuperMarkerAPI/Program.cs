@@ -1,11 +1,12 @@
-using Microsoft.EntityFrameworkCore;
 using SuperMarkerAPI;
-using SuperMarkerAPI.Data;
+using SuperMarket.Application.MappingProfiles;
 using SuperMarket.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddAutoMapper(typeof(MappingProfile));
+
 builder.Services.AddInfrastructureDI(builder.Configuration);
 
 builder.Services.AddControllers();

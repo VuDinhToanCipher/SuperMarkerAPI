@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using SuperMarkerAPI.Data;
 using SuperMarkerAPI.Models;
 using SuperMarket.Core.Interfaces;
@@ -11,20 +6,27 @@ using SuperMarket.Core.Interfaces;
 namespace SuperMarket.Infrastructure.Repositories
 {
     public class ProductRepository(ApplicationDbContext dbContext) : IProductRepository
-    { 
+    {
         public async Task<IEnumerable<ProductEntity>> GetProductByNameAndTypeAsync(string Name = "", string Type = "")
         {
             var query = dbContext.Products.AsQueryable();
-            if (!string.IsNullOrEmpty(Name))
+
+            if (!string.IsNullOrWhiteSpace(Name))
             {
-                query = query.Where(p => p.NameProduct.Contains(Name.ToLower()));
+                var lowerName = Name.ToLower();
+                query = query.Where(p => p.NameProduct.ToLower().Contains(lowerName));
             }
-            if (!string.IsNullOrEmpty(Type))
+
+            if (!string.IsNullOrWhiteSpace(Type))
             {
-                query = query.Where(p => p.productType!.TypeName.Contains(Type.ToLower()));
+                var lowerType = Type.ToLower();
+                query = query.Where(p => p.productType != null &&
+                                         p.productType.TypeName.ToLower().Contains(lowerType));
             }
+
             return await query.ToListAsync();
         }
+
         public async Task<IEnumerable<ProductEntity>> GetProductByPriceAsync(Decimal? maxPrice = null, Decimal? minPrice = null)
         {
             var query = dbContext.Products.AsQueryable();

@@ -1,45 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using AutoMapper;
 using MediatR;
 using SuperMarkerAPI.Models;
 using SuperMarkerAPI.Models.DTOs.ProductsDTO;
-using SuperMarket.Application.DTOs.ProductTypeDTO;
 using SuperMarket.Core.Interfaces;
 
 namespace SuperMarket.Application.Commands.Product
 {
-    public record AddProductCommand(PostProductsDTO PostProducts) : IRequest<ProductEntity>;
+    public record AddProductCommand(PostProductsDTO PostProducts) : IRequest<PostProductsDTO>;
 
-    public class AddProductCommandHandler : IRequestHandler<AddProductCommand, ProductEntity>
+    public class AddProductCommandHandler : IRequestHandler<AddProductCommand, PostProductsDTO>
     {
         private readonly IProductRepository _productRepository;
+        private readonly IMapper _mapper;
 
         // Constructor nhận vào repository
-        public AddProductCommandHandler(IProductRepository productRepository)
+        public AddProductCommandHandler(IProductRepository productRepository, IMapper _mapper)
         {
             _productRepository = productRepository;
+            this._mapper = _mapper;
         }
 
         // Handle là phương thức thực thi lệnh
-        public async Task<ProductEntity> Handle(AddProductCommand request, CancellationToken cancellationToken)
+        public async Task<PostProductsDTO> Handle(AddProductCommand request, CancellationToken cancellationToken)
         {
             // Chuyển đổi DTO sang Entity
-            var productEntity = new ProductEntity
-            {
-                NameProduct = request.PostProducts.NameProduct,
-                ProductTypeID = request.PostProducts.ProductTypeID, 
-                ProductPrice = request.PostProducts.ProductPrice,
-                ProductUnit = request.PostProducts.ProductUnit,
-                ExpirationDate = request.PostProducts.ExpirationDate,
-                ManufactureDate = request.PostProducts.ManufactureDate,
-                IsExpired = request.PostProducts.IsExpired,
-            };
-
+            var productEntity = _mapper.Map<ProductEntity>(request.PostProducts);
             // Gọi phương thức repository để thêm sản phẩm vào database
-            return await _productRepository.AddProductAsync(productEntity);
+            var result =  await _productRepository.AddProductAsync(productEntity);
+            return _mapper.Map<PostProductsDTO>(result);
         }
     }
 }
