@@ -25,6 +25,17 @@ namespace SuperMarket.Infrastructure.Repositories
             }
             return false;
         }
+
+        public async Task<IEnumerable<ProductTypeEntity>> GetProductTypeAsync(string? ProductTypeName)
+        {
+            var query = dbContext.ProductTypes.AsQueryable();
+            if (ProductTypeName is not null)
+            {
+                query = query.Where(p => p.TypeName.Contains(ProductTypeName));
+            }
+            return await query.ToListAsync();
+        }
+
         public async Task<ProductTypeEntity> UpdateProductTypeAsync(Guid ProductTypeID, ProductTypeEntity productTypeEntity)
         {
             var Type = await dbContext.ProductTypes.FirstOrDefaultAsync(x => x.IDType == ProductTypeID);

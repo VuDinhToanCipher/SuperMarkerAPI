@@ -1,4 +1,6 @@
-﻿namespace SuperMarkerAPI.Models
+﻿using SuperMarket.Core.Entities;
+
+namespace SuperMarkerAPI.Models
 {
     public class ProductEntity
     {
@@ -12,5 +14,7 @@
         public bool IsExpired { get; set; }
         //Navigation with ProductType
         public ProductTypeEntity? productType { get; set; }
+        //Navigation with product_supplier
+        public ICollection<Supplier_Product_Entity>? Suppliers { get; set; }
     }
 }

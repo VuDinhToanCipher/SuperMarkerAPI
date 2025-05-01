@@ -28,12 +28,18 @@ namespace SuperMarkerAPI.Controllers
         [HttpDelete("{IDType}")]
         public async Task<IActionResult> DeleteTypeAsync(Guid IDType)
         {
-            var resut = await sender.Send(new DeleteProductTypeCommand(IDType));
-            if(resut == false)
+            var result = await sender.Send(new DeleteProductTypeCommand(IDType));
+            if(result == false)
             {
                 return NotFound();
             }
-            return Ok(resut);
+            return Ok(result);
+        }
+        [HttpGet("GetProductType")]
+        public async Task<IActionResult> GetProductTypeAsync(string? Name)
+        {
+            var result = await sender.Send(new GetProductTypeCommand(Name));
+            return Ok(result);
         }
     }
 }

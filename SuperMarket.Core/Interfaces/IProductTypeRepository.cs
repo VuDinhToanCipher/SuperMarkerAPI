@@ -11,6 +11,7 @@ namespace SuperMarket.Core.Interfaces
     {
         Task<ProductTypeEntity> AddProductTypeAsync(ProductTypeEntity productTypeEntity);
         Task<ProductTypeEntity> UpdateProductTypeAsync(Guid ProductTypeID, ProductTypeEntity productTypeEntity);
+        Task<IEnumerable<ProductTypeEntity>> GetProductTypeAsync(string? ProductTypeName);
         Task<bool> DeleteProductTypeAsync(Guid ProductTypeID);
     }
 }
