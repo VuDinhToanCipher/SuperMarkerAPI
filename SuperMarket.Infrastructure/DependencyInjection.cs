@@ -18,6 +18,7 @@ namespace SuperMarket.Infrastructure
             });
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IProductTypeRepository, ProductTypeRepository>();
+            services.AddScoped<ISupplierRespository, SupplierRespository>();
             return services;
         }
 

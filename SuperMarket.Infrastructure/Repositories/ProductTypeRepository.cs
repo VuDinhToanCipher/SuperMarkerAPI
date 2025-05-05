@@ -17,10 +17,10 @@ namespace SuperMarket.Infrastructure.Repositories
 
         public async Task<bool> DeleteProductTypeAsync(Guid ProductTypeID)
         {
-            var Type = await dbContext.ProductTypes.FirstOrDefaultAsync(x => x.IDType == ProductTypeID);
-            if (Type is not null)
+            var query = await dbContext.ProductTypes.FirstOrDefaultAsync(x => x.IDType == ProductTypeID);
+            if (query is not null)
             {
-                dbContext.ProductTypes.Remove(Type);
+                dbContext.ProductTypes.Remove(query);
                 return await dbContext.SaveChangesAsync() > 0;
             }
             return false;
@@ -38,12 +38,12 @@ namespace SuperMarket.Infrastructure.Repositories
 
         public async Task<ProductTypeEntity> UpdateProductTypeAsync(Guid ProductTypeID, ProductTypeEntity productTypeEntity)
         {
-            var Type = await dbContext.ProductTypes.FirstOrDefaultAsync(x => x.IDType == ProductTypeID);
-            if (Type is not null)
+            var query = await dbContext.ProductTypes.FirstOrDefaultAsync(x => x.IDType == ProductTypeID);
+            if (query is not null)
             {
-                Type.TypeName = productTypeEntity.TypeName;
+                query.TypeName = productTypeEntity.TypeName;
                 await dbContext.SaveChangesAsync();
-                return Type;
+                return query;
             }
             return productTypeEntity;
         }
