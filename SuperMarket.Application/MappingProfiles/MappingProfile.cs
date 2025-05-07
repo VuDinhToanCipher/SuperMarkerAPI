@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
+using AutoMapper.Configuration.Conventions;
 using SuperMarkerAPI.Models;
 using SuperMarkerAPI.Models.DTOs.ProductsDTO;
+using SuperMarket.Application.DTOs.Product_Supplier_DTO;
 using SuperMarket.Application.DTOs.ProductTypeDTO;
 using SuperMarket.Application.DTOs.SupplierDTO;
 using SuperMarket.Core.Entities;
@@ -35,6 +37,13 @@ namespace SuperMarket.Application.MappingProfiles
             CreateMap<UpdateSupplierDTO, SupplierEntity>();
             CreateMap<SupplierEntity, GetSupplierDTO>();
             CreateMap<GetSupplierDTO, SupplierEntity>();
+            //Mapping Product_Supplier
+            CreateMap<Supplier_Product_Entity, Add_Product_Supplier_DTO>();
+            CreateMap<Add_Product_Supplier_DTO, Supplier_Product_Entity>();
+            CreateMap<Supplier_Product_Entity, Get_Supplier_Product_DTO>()
+                .ForMember(dest => dest.ProductName, otp => otp.MapFrom(src => src.ProductEntity.NameProduct))
+                .ForMember(dest => dest.SupplierName, otp => otp.MapFrom(src => src.SupplierEntity.SupplierName));
+            CreateMap<Get_Supplier_Product_DTO, Supplier_Product_Entity>();
         }
     }
 }

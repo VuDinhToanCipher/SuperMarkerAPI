@@ -2,6 +2,8 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SuperMarkerAPI.Data;
+using SuperMarket.Application.Interfaces;
+using SuperMarket.Application.Services;
 using SuperMarket.Core.Interfaces;
 using SuperMarket.Infrastructure.Repositories;
 
@@ -19,6 +21,12 @@ namespace SuperMarket.Infrastructure
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IProductTypeRepository, ProductTypeRepository>();
             services.AddScoped<ISupplierRespository, SupplierRespository>();
+            services.AddScoped<IProductServices, ProductService>();
+            services.AddScoped<IproductTypeService, ProductTypeService>();
+            services.AddScoped<ISupplierService, SupplierService>();
+            services.AddScoped<IProduct_Supplier_Service, Product_Supplier_Service>();
+            services.AddScoped<IProduct_Supplier_Respository,Product_Supplier_Repository>();
+          
             return services;
         }
 

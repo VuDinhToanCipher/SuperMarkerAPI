@@ -3,7 +3,7 @@ using MediatR;
 using SuperMarket.Application.DTOs.ProductTypeDTO;
 using SuperMarket.Core.Interfaces;
 
-namespace SuperMarket.Application.Commands.ProductType
+namespace SuperMarket.Application.Queries.ProductType
 {
     public record GetProductTypeCommand(string? Name) : IRequest<IEnumerable<GetProductTypeDTO>>;
     public class GetProductTypeCommandHandler : IRequestHandler<GetProductTypeCommand, IEnumerable<GetProductTypeDTO>>

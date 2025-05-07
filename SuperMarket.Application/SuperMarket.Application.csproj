@@ -17,9 +17,4 @@
     <ProjectReference Include="..\SuperMarket.Core\SuperMarket.Core.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Queries\" />
-    <Folder Include="Services\" />
-  </ItemGroup>
-
 </Project>

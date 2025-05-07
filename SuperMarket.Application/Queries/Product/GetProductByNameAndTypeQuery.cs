@@ -3,9 +3,9 @@ using MediatR;
 using SuperMarkerAPI.Models.DTOs.ProductsDTO;
 using SuperMarket.Core.Interfaces;
 
-namespace SuperMarket.Application.Commands.Product
+namespace SuperMarket.Application.Queries.Product
 {
-    public record class GetProductByNameAndTypeCommand(string Name,String Type) : IRequest<IEnumerable<GetProductsDTO>>;
+    public record class GetProductByNameAndTypeCommand(string Name,string Type) : IRequest<IEnumerable<GetProductsDTO>>;
     public class GetProductByNameAndTypeCommandHandler : IRequestHandler<GetProductByNameAndTypeCommand, IEnumerable<GetProductsDTO>>
     {
         private readonly IProductRepository _productRepository;

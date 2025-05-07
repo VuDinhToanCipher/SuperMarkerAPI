@@ -6,7 +6,7 @@ using SuperMarket.Core.Interfaces;
 namespace SuperMarket.Infrastructure.Repositories
 {
     public class ProductRepository(ApplicationDbContext dbContext) : IProductRepository
-    {
+    {   
         public async Task<IEnumerable<ProductEntity>> GetProductByNameAndTypeAsync(string Name = "", string Type = "")
         {
             var query = dbContext.Products.AsQueryable();
@@ -42,35 +42,25 @@ namespace SuperMarket.Infrastructure.Repositories
         }
         public async Task<ProductEntity> AddProductAsync(ProductEntity product)
         {
-            product.IDProduct = Guid.NewGuid();
             dbContext.Products.Add(product);
             await dbContext.SaveChangesAsync();
             return product;
         }
-        public async Task<ProductEntity> UpdateProductAsync(Guid ProductID, ProductEntity product)
+        public async Task<ProductEntity> UpdateProductAsync(ProductEntity product)
         {
-            var producT = await dbContext.Products.FirstOrDefaultAsync(x => x.IDProduct == ProductID);
-            if (producT is not null)
-            {
-                producT.NameProduct = product.NameProduct;
-                producT.ProductTypeID = product.ProductTypeID;
-                producT.ProductPrice = product.ProductPrice;
-                producT.ProductUnit = product.ProductUnit;
-                producT.ExpirationDate = product.ExpirationDate;
-                await dbContext.SaveChangesAsync();
-                return producT;
-            }
+            dbContext.Products.Update(product);
+            await dbContext.SaveChangesAsync();
             return product;
         }
-        public async Task<bool> DeleteProductAsync(Guid ProductID)
+        public async Task<bool> DeleteProductAsync(ProductEntity product)
         {
-            var producT = await dbContext.Products.FirstOrDefaultAsync(x => x.IDProduct == ProductID);
-            if (producT is not null)
-            {
-                dbContext.Products.Remove(producT);
-                return await dbContext.SaveChangesAsync() > 0;
-            }
-            return false;
+            dbContext.Products.Remove(product);
+            return await dbContext.SaveChangesAsync() > 0;
+          
+        }
+        public async Task<ProductEntity?> GetByIDAsync(Guid ProductID)
+        {
+            return await dbContext.Products.FindAsync(ProductID);
         }
     }
 }

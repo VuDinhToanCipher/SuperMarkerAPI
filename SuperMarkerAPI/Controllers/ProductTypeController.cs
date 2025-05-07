@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using SuperMarket.Application.Commands.ProductType;
 using SuperMarket.Application.DTOs.ProductTypeDTO;
+using SuperMarket.Application.Queries.ProductType;
 
 namespace SuperMarkerAPI.Controllers
 {

@@ -2,7 +2,7 @@
 using MediatR;
 using SuperMarkerAPI.Models;
 using SuperMarkerAPI.Models.DTOs.ProductsDTO;
-using SuperMarket.Core.Interfaces;
+using SuperMarket.Application.Interfaces;
 
 namespace SuperMarket.Application.Commands.Product
 {
@@ -10,14 +10,15 @@ namespace SuperMarket.Application.Commands.Product
 
     public class AddProductCommandHandler : IRequestHandler<AddProductCommand, PostProductsDTO>
     {
-        private readonly IProductRepository _productRepository;
+        
+        private readonly IProductServices _productServices;
         private readonly IMapper _mapper;
 
-        // Constructor nhận vào repository
-        public AddProductCommandHandler(IProductRepository productRepository, IMapper _mapper)
+        
+        public AddProductCommandHandler(IProductServices _productServices, IMapper _mapper)
         {
-            _productRepository = productRepository;
-            this._mapper = _mapper;
+           this._productServices = _productServices;
+           this._mapper = _mapper;
         }
 
         // Handle là phương thức thực thi lệnh
@@ -26,7 +27,7 @@ namespace SuperMarket.Application.Commands.Product
             // Chuyển đổi DTO sang Entity
             var productEntity = _mapper.Map<ProductEntity>(request.PostProducts);
             // Gọi phương thức repository để thêm sản phẩm vào database
-            var result =  await _productRepository.AddProductAsync(productEntity);
+            var result =  await _productServices.CreateProductAsync(productEntity);
             return _mapper.Map<PostProductsDTO>(result);
         }
     }

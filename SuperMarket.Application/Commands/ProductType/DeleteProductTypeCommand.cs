@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using SuperMarket.Application.Interfaces;
 using SuperMarket.Core.Interfaces;
 
 namespace SuperMarket.Application.Commands.ProductType
@@ -6,14 +7,14 @@ namespace SuperMarket.Application.Commands.ProductType
     public record DeleteProductTypeCommand(Guid IDType):IRequest<bool>;
     public class DeleteProductTypeHandler : IRequestHandler<DeleteProductTypeCommand, bool>
     {
-        private readonly IProductTypeRepository _productTypeRepository;
-        public DeleteProductTypeHandler(IProductTypeRepository _productTypeRepository)
+        private readonly IproductTypeService _iproductType;
+        public DeleteProductTypeHandler(IproductTypeService _iproductType)
         {
-            this._productTypeRepository = _productTypeRepository;
+            this._iproductType = _iproductType;
         }
         public async Task<bool> Handle(DeleteProductTypeCommand request, CancellationToken cancellationToken)
         {
-            return await _productTypeRepository.DeleteProductTypeAsync(request.IDType);
+            return await _iproductType.DeleteProductTypeAsync(request.IDType);
         }
     }
 }

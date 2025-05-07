@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using SuperMarket.Application.Commands.Supplier;
 using SuperMarket.Application.DTOs.SupplierDTO;
+using SuperMarket.Application.Queries.Supplier;
 
 namespace SuperMarketAPI.Controllers
 {
@@ -21,6 +22,17 @@ namespace SuperMarketAPI.Controllers
             var result = await sender.Send(new UpdateSupplierCommand(supplierDTO,IDSupplier));
             return Ok(result);
         }
-
+        [HttpGet]
+        public async Task<IActionResult> GetSupplierAsync([FromQuery] string Namesupplier = "")
+        {
+            var result = await sender.Send(new GetSupplierCommand(Namesupplier));   
+            return Ok(result);
+        }
+        [HttpDelete("{IDSupplier}")]
+        public async Task<IActionResult> DeleteSupplierAsync(Guid IDSupplier)
+        {
+            var result = await sender.Send(new  DeleteSupplierCommand(IDSupplier));
+            return Ok(result);
+        }
     }
 }

@@ -3,7 +3,7 @@ using MediatR;
 using SuperMarkerAPI.Models.DTOs.ProductsDTO;
 using SuperMarket.Core.Interfaces;
 
-namespace SuperMarket.Application.Commands.Product
+namespace SuperMarket.Application.Queries.Product
 {
     public record GetProductByPriceCommand(decimal? MaxValue,decimal? MinValue) : IRequest<IEnumerable<GetProductsDTO>>;
     public class GetProductByPriceCommandHandler : IRequestHandler<GetProductByPriceCommand, IEnumerable<GetProductsDTO>>

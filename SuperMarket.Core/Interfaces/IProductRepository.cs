@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SuperMarkerAPI.Models;
+﻿using SuperMarkerAPI.Models;
 
 namespace SuperMarket.Core.Interfaces
 {
@@ -12,7 +7,8 @@ namespace SuperMarket.Core.Interfaces
         Task<IEnumerable<ProductEntity>> GetProductByNameAndTypeAsync(string Name = "", string Type = "");
         Task<IEnumerable<ProductEntity>> GetProductByPriceAsync(Decimal? maxPrice = null, Decimal? minPrice = null);
         Task<ProductEntity> AddProductAsync(ProductEntity product);
-        Task<ProductEntity> UpdateProductAsync(Guid ProductID, ProductEntity product);
-        Task<bool> DeleteProductAsync(Guid ProductID);
+        Task<ProductEntity> UpdateProductAsync(ProductEntity product);
+        Task<bool> DeleteProductAsync(ProductEntity product);
+        Task<ProductEntity?> GetByIDAsync(Guid ProductID);
     }
 }
