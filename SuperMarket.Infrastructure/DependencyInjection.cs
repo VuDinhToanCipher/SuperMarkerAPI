@@ -26,6 +26,9 @@ namespace SuperMarket.Infrastructure
             services.AddScoped<ISupplierService, SupplierService>();
             services.AddScoped<IProduct_Supplier_Service, Product_Supplier_Service>();
             services.AddScoped<IProduct_Supplier_Respository,Product_Supplier_Repository>();
+
+            // Sign in validation
+            
           
             return services;
         }

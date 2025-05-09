@@ -9,5 +9,6 @@ namespace SuperMarket.Core.Interfaces
         Task<IEnumerable<ProductTypeEntity>> GetProductTypeAsync(string? ProductTypeName);
         Task<bool> DeleteProductTypeAsync(ProductTypeEntity productTypeEntity);
         Task<ProductTypeEntity?> GetProductTypeByIDAsync(Guid ProductTypeID);
+        Task<bool> ExistAsync(Guid ProductTypeID);
     }
 }

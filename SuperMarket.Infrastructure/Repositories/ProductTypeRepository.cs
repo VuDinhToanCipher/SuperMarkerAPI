@@ -20,6 +20,11 @@ namespace SuperMarket.Infrastructure.Repositories
             return await dbContext.SaveChangesAsync() > 0;
         }
 
+        public async Task<bool> ExistAsync(Guid ProductTypeID)
+        {
+            return await dbContext.ProductTypes.AnyAsync(pt => pt.IDType == ProductTypeID);
+        }
+
         public async Task<IEnumerable<ProductTypeEntity>> GetProductTypeAsync(string? ProductTypeName)
         {
             var query = dbContext.ProductTypes.AsQueryable();

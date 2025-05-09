@@ -7,14 +7,10 @@ using SuperMarket.Application.Interfaces;
 namespace SuperMarket.Application.Commands.Product
 {
     public record AddProductCommand(PostProductsDTO PostProducts) : IRequest<PostProductsDTO>;
-
     public class AddProductCommandHandler : IRequestHandler<AddProductCommand, PostProductsDTO>
     {
-        
         private readonly IProductServices _productServices;
         private readonly IMapper _mapper;
-
-        
         public AddProductCommandHandler(IProductServices _productServices, IMapper _mapper)
         {
            this._productServices = _productServices;
