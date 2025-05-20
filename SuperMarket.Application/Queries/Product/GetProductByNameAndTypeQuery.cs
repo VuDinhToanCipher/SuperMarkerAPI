@@ -5,7 +5,7 @@ using SuperMarket.Core.Interfaces;
 
 namespace SuperMarket.Application.Queries.Product
 {
-    public record class GetProductByNameAndTypeCommand(string Name,string Type) : IRequest<IEnumerable<GetProductsDTO>>;
+    public record GetProductByNameAndTypeCommand(string Name,string Type) : IRequest<IEnumerable<GetProductsDTO>>;
     public class GetProductByNameAndTypeCommandHandler : IRequestHandler<GetProductByNameAndTypeCommand, IEnumerable<GetProductsDTO>>
     {
         private readonly IProductRepository _productRepository;

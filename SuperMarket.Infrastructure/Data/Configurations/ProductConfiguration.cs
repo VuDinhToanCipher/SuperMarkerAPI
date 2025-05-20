@@ -31,6 +31,9 @@ namespace SuperMarkerAPI.Data.Configurations
                 .WithMany(pt => pt.Products)
                 .HasForeignKey(p => p.ProductTypeID)
                 .OnDelete(DeleteBehavior.Cascade);
+            builder.HasMany(sp => sp.Suppliers)
+                .WithOne(p => p.ProductEntity)
+                .HasForeignKey(p => p.ProductId);
         }
     }
 }

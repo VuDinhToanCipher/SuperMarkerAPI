@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SuperMarkerAPI.Data;
 
@@ -11,9 +12,11 @@ using SuperMarkerAPI.Data;
 namespace SuperMarkerAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250510154752_UpdateDatabase")]
+    partial class UpdateDatabase
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -97,39 +100,9 @@ namespace SuperMarkerAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("PermissionID")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("CustomerID");
 
-                    b.HasIndex("PermissionID");
-
                     b.ToTable("Customer");
-                });
-
-            modelBuilder.Entity("SuperMarket.Core.Entities.CustomerPermissionEntity", b =>
-                {
-                    b.Property<Guid>("PermissionID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<float>("Discount")
-                        .HasColumnType("real");
-
-                    b.Property<float>("HolidayDiscount")
-                        .HasColumnType("real");
-
-                    b.Property<string>("NamePermission")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.HasKey("PermissionID");
-
-                    b.ToTable("CustomerPermissions");
                 });
 
             modelBuilder.Entity("SuperMarket.Core.Entities.EmployeeEntity", b =>
@@ -162,14 +135,9 @@ namespace SuperMarkerAPI.Migrations
                     b.Property<Guid>("PositionID")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("WarehouseID")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("EmployeeID");
 
                     b.HasIndex("PositionID");
-
-                    b.HasIndex("WarehouseID");
 
                     b.ToTable("Employee");
                 });
@@ -228,60 +196,6 @@ namespace SuperMarkerAPI.Migrations
                     b.HasIndex("SupplierID");
 
                     b.ToTable("ImportReceipt");
-                });
-
-            modelBuilder.Entity("SuperMarket.Core.Entities.InvoiceDetailEntity", b =>
-                {
-                    b.Property<Guid>("InvoiceDetailID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("InvoiceID")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("ProductID")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("UnitPrice")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("InvoiceDetailID");
-
-                    b.HasIndex("InvoiceID");
-
-                    b.HasIndex("ProductID");
-
-                    b.ToTable("InvoiceDetail");
-                });
-
-            modelBuilder.Entity("SuperMarket.Core.Entities.InvoiceEntity", b =>
-                {
-                    b.Property<Guid>("InvoiceID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("CustomerID")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("EmployeeID")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("InvoiceID");
-
-                    b.HasIndex("CustomerID");
-
-                    b.HasIndex("EmployeeID");
-
-                    b.ToTable("Invoice");
                 });
 
             modelBuilder.Entity("SuperMarket.Core.Entities.PermissionEntity", b =>
@@ -380,51 +294,6 @@ namespace SuperMarkerAPI.Migrations
                     b.ToTable("supplier_Product");
                 });
 
-            modelBuilder.Entity("SuperMarket.Core.Entities.WarehouseEntity", b =>
-                {
-                    b.Property<Guid>("WarehouseID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("WarehouseLocation")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("WarehouseName")
-                        .IsRequired()
-                        .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)");
-
-                    b.Property<string>("WarehousePhoneNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("WarehouseID");
-
-                    b.ToTable("Warehouse");
-                });
-
-            modelBuilder.Entity("SuperMarket.Core.Entities.WarehouseInventoryEntity", b =>
-                {
-                    b.Property<Guid>("ProductID")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("WarehouseID")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.HasKey("ProductID", "WarehouseID");
-
-                    b.HasIndex("WarehouseID");
-
-                    b.ToTable("Inventory");
-                });
-
             modelBuilder.Entity("SuperMarkerAPI.Models.ProductEntity", b =>
                 {
                     b.HasOne("SuperMarkerAPI.Models.ProductTypeEntity", "productType")
@@ -436,17 +305,6 @@ namespace SuperMarkerAPI.Migrations
                     b.Navigation("productType");
                 });
 
-            modelBuilder.Entity("SuperMarket.Core.Entities.CustomerEntity", b =>
-                {
-                    b.HasOne("SuperMarket.Core.Entities.CustomerPermissionEntity", "CustomerPermission")
-                        .WithMany("Customer")
-                        .HasForeignKey("PermissionID")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("CustomerPermission");
-                });
-
             modelBuilder.Entity("SuperMarket.Core.Entities.EmployeeEntity", b =>
                 {
                     b.HasOne("SuperMarket.Core.Entities.PositionEntity", "Position")
@@ -455,13 +313,7 @@ namespace SuperMarkerAPI.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("SuperMarket.Core.Entities.WarehouseEntity", "Warehouse")
-                        .WithMany("Employees")
-                        .HasForeignKey("WarehouseID");
-
                     b.Navigation("Position");
-
-                    b.Navigation("Warehouse");
                 });
 
             modelBuilder.Entity("SuperMarket.Core.Entities.ImportDetailEntity", b =>
@@ -506,44 +358,6 @@ namespace SuperMarkerAPI.Migrations
                     b.Navigation("Supplier");
                 });
 
-            modelBuilder.Entity("SuperMarket.Core.Entities.InvoiceDetailEntity", b =>
-                {
-                    b.HasOne("SuperMarket.Core.Entities.InvoiceEntity", "Invoice")
-                        .WithMany("InvoiceDetail")
-                        .HasForeignKey("InvoiceID")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("SuperMarkerAPI.Models.ProductEntity", "Product")
-                        .WithMany("invoiceDetails")
-                        .HasForeignKey("ProductID")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Invoice");
-
-                    b.Navigation("Product");
-                });
-
-            modelBuilder.Entity("SuperMarket.Core.Entities.InvoiceEntity", b =>
-                {
-                    b.HasOne("SuperMarket.Core.Entities.CustomerEntity", "Customer")
-                        .WithMany("Invoices")
-                        .HasForeignKey("CustomerID")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("SuperMarket.Core.Entities.EmployeeEntity", "Employee")
-                        .WithMany("Invoices")
-                        .HasForeignKey("EmployeeID")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Customer");
-
-                    b.Navigation("Employee");
-                });
-
             modelBuilder.Entity("SuperMarket.Core.Entities.Position_Permission_Entity", b =>
                 {
                     b.HasOne("SuperMarket.Core.Entities.PermissionEntity", "PermissionEntity")
@@ -582,34 +396,11 @@ namespace SuperMarkerAPI.Migrations
                     b.Navigation("SupplierEntity");
                 });
 
-            modelBuilder.Entity("SuperMarket.Core.Entities.WarehouseInventoryEntity", b =>
-                {
-                    b.HasOne("SuperMarkerAPI.Models.ProductEntity", "Products")
-                        .WithMany("Inventory")
-                        .HasForeignKey("ProductID")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("SuperMarket.Core.Entities.WarehouseEntity", "Warehouses")
-                        .WithMany("Inventory")
-                        .HasForeignKey("WarehouseID")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Products");
-
-                    b.Navigation("Warehouses");
-                });
-
             modelBuilder.Entity("SuperMarkerAPI.Models.ProductEntity", b =>
                 {
-                    b.Navigation("Inventory");
-
                     b.Navigation("Suppliers");
 
                     b.Navigation("importDetailEntities");
-
-                    b.Navigation("invoiceDetails");
                 });
 
             modelBuilder.Entity("SuperMarkerAPI.Models.ProductTypeEntity", b =>
@@ -617,29 +408,9 @@ namespace SuperMarkerAPI.Migrations
                     b.Navigation("Products");
                 });
 
-            modelBuilder.Entity("SuperMarket.Core.Entities.CustomerEntity", b =>
-                {
-                    b.Navigation("Invoices");
-                });
-
-            modelBuilder.Entity("SuperMarket.Core.Entities.CustomerPermissionEntity", b =>
-                {
-                    b.Navigation("Customer");
-                });
-
-            modelBuilder.Entity("SuperMarket.Core.Entities.EmployeeEntity", b =>
-                {
-                    b.Navigation("Invoices");
-                });
-
             modelBuilder.Entity("SuperMarket.Core.Entities.ImportReceiptEntity", b =>
                 {
                     b.Navigation("ImportDetail");
-                });
-
-            modelBuilder.Entity("SuperMarket.Core.Entities.InvoiceEntity", b =>
-                {
-                    b.Navigation("InvoiceDetail");
                 });
 
             modelBuilder.Entity("SuperMarket.Core.Entities.PermissionEntity", b =>
@@ -655,13 +426,6 @@ namespace SuperMarkerAPI.Migrations
             modelBuilder.Entity("SuperMarket.Core.Entities.SupplierEntity", b =>
                 {
                     b.Navigation("Products");
-                });
-
-            modelBuilder.Entity("SuperMarket.Core.Entities.WarehouseEntity", b =>
-                {
-                    b.Navigation("Employees");
-
-                    b.Navigation("Inventory");
                 });
 #pragma warning restore 612, 618
         }

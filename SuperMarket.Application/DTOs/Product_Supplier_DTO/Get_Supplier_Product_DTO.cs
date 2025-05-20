@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SuperMarkerAPI.Models;
-using SuperMarket.Core.Entities;
-
-namespace SuperMarket.Application.DTOs.Product_Supplier_DTO
+﻿namespace SuperMarket.Application.DTOs.Product_Supplier_DTO
 {
     public class Get_Supplier_Product_DTO
     {

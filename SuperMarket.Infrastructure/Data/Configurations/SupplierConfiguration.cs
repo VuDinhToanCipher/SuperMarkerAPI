@@ -9,6 +9,9 @@ namespace SuperMarket.Infrastructure.Data.Configurations
         public void Configure(EntityTypeBuilder<SupplierEntity> builder)
         {
             builder.HasKey(p => p.SupplierId);
+            builder.HasMany(p => p.Products)
+                .WithOne(sp => sp.SupplierEntity)
+                .HasForeignKey(sp => sp.SupplierId);
         }
     }
 }

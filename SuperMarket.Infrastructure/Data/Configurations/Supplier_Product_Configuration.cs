@@ -12,11 +12,11 @@ namespace SuperMarket.Infrastructure.Data.Configurations
             builder.HasOne(sp => sp.ProductEntity)
                 .WithMany(s => s.Suppliers)
                 .HasForeignKey(sp => sp.ProductId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
             builder.HasOne(sp => sp.SupplierEntity)
                 .WithMany(p => p.Products)
                 .HasForeignKey(sp => sp.SupplierId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

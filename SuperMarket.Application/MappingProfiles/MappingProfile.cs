@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
-using AutoMapper.Configuration.Conventions;
 using SuperMarkerAPI.Models;
 using SuperMarkerAPI.Models.DTOs.ProductsDTO;
+using SuperMarket.Application.DTOs.Permission;
+using SuperMarket.Application.DTOs.PermissionDTO;
+using SuperMarket.Application.DTOs.PositionDTO;
 using SuperMarket.Application.DTOs.Product_Supplier_DTO;
 using SuperMarket.Application.DTOs.ProductTypeDTO;
 using SuperMarket.Application.DTOs.SupplierDTO;
@@ -41,9 +43,22 @@ namespace SuperMarket.Application.MappingProfiles
             CreateMap<Supplier_Product_Entity, Add_Product_Supplier_DTO>();
             CreateMap<Add_Product_Supplier_DTO, Supplier_Product_Entity>();
             CreateMap<Supplier_Product_Entity, Get_Supplier_Product_DTO>()
-                .ForMember(dest => dest.ProductName, otp => otp.MapFrom(src => src.ProductEntity.NameProduct))
-                .ForMember(dest => dest.SupplierName, otp => otp.MapFrom(src => src.SupplierEntity.SupplierName));
+                .ForMember(dest => dest.ProductName, otp => otp.MapFrom(src => src.ProductEntity!.NameProduct))
+                .ForMember(dest => dest.SupplierName, otp => otp.MapFrom(src => src.SupplierEntity!.SupplierName));
             CreateMap<Get_Supplier_Product_DTO, Supplier_Product_Entity>();
+            //Mapping Position
+            CreateMap<AddPositionDTO, PositionEntity>();
+            CreateMap<PositionEntity,AddPositionDTO>();
+            CreateMap<UpdatePositionDTO,PositionEntity >();
+            CreateMap<PositionEntity,UpdatePositionDTO>();
+            CreateMap<GetAllPoisitionDTO,PositionEntity>();
+            CreateMap<PositionEntity,GetAllPoisitionDTO>();
+            //Mapping Permission
+            CreateMap<AddPermisstionDTO,PermissionEntity>();
+            CreateMap<PermissionEntity,AddPermisstionDTO>();
+            CreateMap<UpdatePermissionDTO,PermissionEntity>();
+            CreateMap<PermissionEntity,UpdatePermissionDTO>();
+
         }
     }
 }
